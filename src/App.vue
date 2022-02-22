@@ -1,17 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="loginFacebook()">
+      Login
+    </button>
+    <button @click="logoutFacebook()">
+      Logout
+    </button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import firebase from '@/plugins/firebase'
+// import axios from 'axios'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    async loginFacebook () {
+      const res = await firebase.auth.signInWithPopup(firebase.provider)
+      console.log(res)
+
+      // await axios.get(
+      //   `http://localhost:3000/facebook/get-lead?accesstoken=${res.credential?.accessToken}&uid=${res.user?.uid}`
+      // )
+
+      // uid
+      // credential?.accessToken
+    },
+    async logoutFacebook () {
+      await firebase.auth.signOut()
+    }
   }
 }
 </script>
